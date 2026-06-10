@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import google.generativeai as genai
 import pathlib
 import json
@@ -8,9 +10,15 @@ import requests
 from bs4 import BeautifulSoup
 from typing import Optional
 
+# Yerel geliştirme için .env dosyasındaki değişkenleri yükle
+load_dotenv()
 
+# Gemini API anahtarını ortam değişkeninden (Environment Variable) alıyoruz.
+api_key = os.environ.get("GEMINI_API_KEY")
+if not api_key:
+    raise ValueError("GEMINI_API_KEY ortam değişkeni bulunamadı! Lütfen bir .env dosyası oluşturun veya ortam değişkenini ayarlayın.")
 
-genai.configure(api_key="AIzaSyDeMGft7nypGIqULiu-kSz2_AoFuma8rfk")
+genai.configure(api_key=api_key)
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 app = FastAPI()

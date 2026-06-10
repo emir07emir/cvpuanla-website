@@ -1,6 +1,8 @@
 import { useState, useRef, useMemo } from "react"
 import './App.css'
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"
+
 // ——— SVG Icon Components ———
 function UploadIcon() {
   return (
@@ -394,7 +396,7 @@ function App() {
           formData.append("ilan_metin", ilanMetin.trim())
         }
 
-        const yanit = await fetch("http://127.0.0.1:8000/eslestir", {
+        const yanit = await fetch(`${API_BASE_URL}/eslestir`, {
           method: "POST",
           body: formData
         })
@@ -410,7 +412,7 @@ function App() {
         }
       } else {
         // Sadece CV analizi
-        const yanit = await fetch("http://127.0.0.1:8000/analiz", {
+        const yanit = await fetch(`${API_BASE_URL}/analiz`, {
           method: "POST",
           body: formData
         })

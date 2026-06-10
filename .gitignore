@@ -1,0 +1,22 @@
+# Python Virtual Environment
+venv/
+__pycache__/
+*.pyc
+
+# Local Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Node/JS dependencies (just in case they are in root, though they are in frontend)
+node_modules/
+dist/
+build/
+
+# IDE files
+.vscode/
+.idea/
+
+# User uploaded files/scraps
+*.pdf
+gecici_*
