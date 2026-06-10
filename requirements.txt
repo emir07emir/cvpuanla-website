@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+google-generativeai
+beautifulsoup4==4.15.0
+requests==2.34.2
+PyMuPDF==1.27.2.3
+pydantic==2.13.4
+anyio==4.13.0
+httpx==0.28.1
