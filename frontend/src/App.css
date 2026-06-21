@@ -56,10 +56,12 @@
 }
 
 .site-logo {
-  max-height: 80px;
+  display: block;
+  max-height: 260px;
   width: auto;
-  margin-bottom: 12px;
+  margin: -35px auto -45px auto;
   object-fit: contain;
+  border-radius: 15px;
 }
 
 .header h1 {

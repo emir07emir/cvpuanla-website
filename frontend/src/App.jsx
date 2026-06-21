@@ -447,10 +447,6 @@ function App() {
       <div className="app-container">
         {/* Header */}
         <header className="header">
-          <div className="header-badge">
-            <span className="header-badge-dot" />
-            Yapay Zeka Destekli
-          </div>
           <img src={SiteLogo} alt="CV Puanla Logo" className="site-logo" />
           <p>CV'nizi yükleyin, yapay zeka güçlü ve zayıf yönlerinizi analiz etsin. İsterseniz bir iş ilanıyla eşleştirin.</p>
         </header>
