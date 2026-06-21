@@ -2,6 +2,7 @@ import { useState, useRef, useMemo } from "react"
 import './App.css'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"
+import SiteLogo from '../logo/cvpuanlalogo.png'
 
 // ——— SVG Icon Components ———
 function UploadIcon() {
@@ -450,6 +451,7 @@ function App() {
             <span className="header-badge-dot" />
             Yapay Zeka Destekli
           </div>
+          <img src={SiteLogo} alt="CV Puanla Logo" className="site-logo" />
           <p>CV'nizi yükleyin, yapay zeka güçlü ve zayıf yönlerinizi analiz etsin. İsterseniz bir iş ilanıyla eşleştirin.</p>
         </header>
 
