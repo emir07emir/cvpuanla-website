@@ -450,7 +450,6 @@ function App() {
             <span className="header-badge-dot" />
             Yapay Zeka Destekli
           </div>
-          <h1>CV Analiz</h1>
           <p>CV'nizi yükleyin, yapay zeka güçlü ve zayıf yönlerinizi analiz etsin. İsterseniz bir iş ilanıyla eşleştirin.</p>
         </header>
 
@@ -689,7 +688,8 @@ function App() {
         {/* Footer */}
         <footer className="footer">
           <p>
-            <span>CV Analiz</span> — Yapay zeka ile desteklenmektedir
+            <span>CV Puanla</span>
+            © 2026 Tüm hakları saklıdır.
           </p>
         </footer>
       </div>

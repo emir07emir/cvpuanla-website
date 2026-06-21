@@ -55,6 +55,13 @@
   animation: pulse 2s ease-in-out infinite;
 }
 
+.site-logo {
+  max-height: 80px;
+  width: auto;
+  margin-bottom: 12px;
+  object-fit: contain;
+}
+
 .header h1 {
   font-size: 48px;
   font-weight: 800;
