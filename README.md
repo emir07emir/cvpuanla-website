@@ -42,7 +42,6 @@ Eğer projeyi başka bir bilgisayarda çalıştırıyorsanız veya sıfırdan ku
 ---
 
 
-
 #### 2. Frontend Kurulumu:
 
 1. `frontend` klasörüne geçiş yapın:
