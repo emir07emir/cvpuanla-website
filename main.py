@@ -1,4 +1,5 @@
 import os
+import time
 from dotenv import load_dotenv
 import google.generativeai as genai
 import pathlib
@@ -20,6 +21,35 @@ if not api_key:
 
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel("gemini-2.5-flash")
+
+MAX_RETRIES = 3
+RETRY_DELAY = 60  # saniye
+
+
+def gemini_iste(icerik: list) -> str:
+    """Gemini API'ye istek atar; 429 hatalarında retry uygular."""
+    for deneme in range(MAX_RETRIES):
+        try:
+            response = model.generate_content(icerik)
+            return response.text
+        except Exception as e:
+            hata_str = str(e)
+            # 429 / quota hatası mı?
+            if "429" in hata_str or "quota" in hata_str.lower() or "RESOURCE_EXHAUSTED" in hata_str:
+                # retry_delay saniyesini hatadan okumaya çalış
+                import re
+                eslesen = re.search(r'retry_delay.*?seconds.*?(\d+)', hata_str, re.DOTALL)
+                bekleme = int(eslesen.group(1)) if eslesen else RETRY_DELAY
+                if deneme < MAX_RETRIES - 1:
+                    time.sleep(bekleme + 2)  # +2 güvenlik payı
+                    continue
+                else:
+                    raise Exception(
+                        f"QUOTA_EXCEEDED: Gemini API ücretsiz kullanım limitiniz doldu. "
+                        f"Lütfen {bekleme} saniye bekleyip tekrar deneyin veya "
+                        f"ücretli plana geçmek için https://ai.dev/rate-limit adresini ziyaret edin."
+                    )
+            raise  # Başka hata ise direkt fırlat
 
 app = FastAPI()
 app.add_middleware(
@@ -105,18 +135,16 @@ def cv_analiz_et(pdf_yolu:str)-> dict: #pdf yolunun tipi string ve döndüreceğ
         SADECE JSON döndür, başka hiçbir şey yazma.
         """
 
-        response = model.generate_content(
-        [prompt,
-        {
-            "mime_type": "application/pdf",
-            "data": pdf_dosya.read_bytes()
-        }
-        ]
-        )
-
-        ham_metin = response.text.strip() #baştaki ve sondaki boşlukları temizle
-        ham_metin = ham_metin.replace("```json","").replace("```","").strip()
-        return json.loads(ham_metin) #metni python sözlüğüne çevir(dict)
+        ham_metin = gemini_iste(
+            [prompt,
+             {
+                 "mime_type": "application/pdf",
+                 "data": pdf_dosya.read_bytes()
+             }
+             ]
+        ).strip()
+        ham_metin = ham_metin.replace("```json", "").replace("```", "").strip()
+        return json.loads(ham_metin)  # metni python sözlüğüne çevir(dict)
     except FileNotFoundError:
         return{"hata": "PDF dosyası bulunamadı."}
     except Exception as e:
@@ -167,16 +195,14 @@ def cv_ilan_eslestir(pdf_yolu: str, ilan_metni: str) -> dict:
         SADECE JSON döndür, başka hiçbir şey yazma.
         """
 
-        response = model.generate_content(
+        ham_metin = gemini_iste(
             [prompt,
              {
                  "mime_type": "application/pdf",
                  "data": pdf_dosya.read_bytes()
              }
              ]
-        )
-
-        ham_metin = response.text.strip()
+        ).strip()
         ham_metin = ham_metin.replace("```json", "").replace("```", "").strip()
         return json.loads(ham_metin)
 

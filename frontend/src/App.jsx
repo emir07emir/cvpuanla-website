@@ -404,7 +404,7 @@ function App() {
         const veri = await yanit.json()
 
         if (veri.hata) {
-          setHata(veri.hata)
+          setHata(formatHata(veri.hata))
           setSonuc(null)
         } else {
           setSonuc(veri)
@@ -420,7 +420,7 @@ function App() {
         const veri = await yanit.json()
 
         if (veri.hata) {
-          setHata(veri.hata)
+          setHata(formatHata(veri.hata))
           setSonuc(null)
         } else {
           setSonuc(veri)
